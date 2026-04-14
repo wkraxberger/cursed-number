@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Press_Start_2P } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 // Self-host the pixel font so it ships with the first response. Without
@@ -20,6 +21,8 @@ export const metadata: Metadata = {
     "One number is drawn daily via drand. If it ever matches the cursed number, the signal dies forever.",
 };
 
+const CF_ANALYTICS_TOKEN = process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN;
+
 export default function RootLayout({
   children,
 }: {
@@ -27,7 +30,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={pressStart.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {CF_ANALYTICS_TOKEN ? (
+          <Script
+            strategy="afterInteractive"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={`{"token": "${CF_ANALYTICS_TOKEN}"}`}
+          />
+        ) : null}
+      </body>
     </html>
   );
 }
