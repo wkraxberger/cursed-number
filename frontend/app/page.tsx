@@ -188,7 +188,7 @@ export default async function HomePage() {
               >
                 BROADCAST ENDED
               </div>
-            ) : (
+            ) : waiting ? null : (
               <div
                 data-countdown
                 style={{
@@ -206,7 +206,7 @@ export default async function HomePage() {
                     letterSpacing: "var(--ls-label)",
                   }}
                 >
-                  {waiting ? "FIRST DRAW IN" : "NEXT DRAW"}
+                  NEXT DRAW
                 </div>
                 <Countdown />
               </div>
