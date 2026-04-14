@@ -36,7 +36,7 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "What are the odds?",
-    a: "Each day a number between 0 and 999 is drawn. The cursed number is 666. That gives a 1 in 1,000 chance every day. Draws happen at midnight UTC.",
+    a: "Each day a number between 0 and 999 is drawn. One of those numbers is the cursed number. That gives a 1 in 1,000 chance every day. Draws happen at midnight UTC.",
   },
   {
     q: "What happens if the cursed number is drawn?",

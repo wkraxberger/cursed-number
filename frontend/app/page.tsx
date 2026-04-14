@@ -18,8 +18,21 @@ export default async function HomePage() {
   const deathDayLabel =
     state.deathDay != null ? `DAY ${String(state.deathDay).padStart(3, "0")}` : "";
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Cursed Number",
+    url: "https://www.cursednumber.com",
+    description:
+      "An experimental internet project. One number is drawn every day via drand. If the draw ever lands on the cursed number, the signal dies forever.",
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Background scene="home" />
       <main
         style={{
