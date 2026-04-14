@@ -116,7 +116,7 @@ export default async function HomePage() {
             >
               {dead
                 ? "The signal has ended. The archive is locked."
-                : "A daily reminder of life's inevitable fragility"}
+                : "One draw per day. One chance to die."}
             </div>
           </div>
 
