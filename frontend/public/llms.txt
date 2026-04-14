@@ -1,0 +1,24 @@
+# Cursed Number
+
+> An experimental internet project. One number is drawn every day using drand, a public verifiable randomness beacon. If the draw ever lands on the cursed number, the signal dies forever and the site becomes a memorial. A daily reminder of life's inevitable fragility.
+
+## Key facts
+
+- One draw per day at midnight UTC.
+- Numbers are in the range 0–999.
+- Odds: 1 in 1,000 per day.
+- Randomness source: drand (https://drand.love), operated by the League of Entropy.
+- Every draw is logged with its drand round number and hash, making it cryptographically verifiable.
+- If the cursed number is ever drawn, the site stops producing new draws forever. The archive and past history remain accessible as a memorial.
+- There is a 95% chance of the "regular" ending and a 5% chance of a secret alternate ending, selected by verifiable random criteria. The ending that is not chosen is permanently deleted; no one will ever see it.
+
+## Pages
+
+- [Home](https://www.cursednumber.com/): Current state, today's draw, countdown to next draw.
+- [About](https://www.cursednumber.com/about): How the system works.
+- [FAQ](https://www.cursednumber.com/faq): Detailed answers about randomness, odds, endings, and open source.
+- [Log](https://www.cursednumber.com/log): Complete history of every draw ever made.
+
+## Source
+
+Open source under the MIT license. https://github.com/wkraxberger/cursed-number
