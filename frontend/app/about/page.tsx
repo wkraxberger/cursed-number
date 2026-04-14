@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Background } from "@/components/background";
 import { DeadBanner } from "@/components/dead-banner";
 import { BackLink, FooterNav } from "@/components/nav";
@@ -9,6 +10,13 @@ import {
 import { getState } from "@/lib/state";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "How Cursed Number works: one number drawn daily via drand's public randomness beacon, compared to the cursed number, and if they match the signal dies forever.",
+  alternates: { canonical: "/about" },
+};
 
 export default async function AboutPage() {
   const state = await getState();

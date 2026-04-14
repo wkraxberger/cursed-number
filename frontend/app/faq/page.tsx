@@ -1,9 +1,17 @@
+import type { Metadata } from "next";
 import { Background } from "@/components/background";
 import { DeadBanner } from "@/components/dead-banner";
 import { BackLink, FooterNav } from "@/components/nav";
 import { getState } from "@/lib/state";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "FAQ",
+  description:
+    "Frequently asked questions about Cursed Number: how the number is drawn, the odds, what happens when the cursed number is drawn, and how the secret ending works.",
+  alternates: { canonical: "/faq" },
+};
 
 const faqs: { q: string; a: React.ReactNode }[] = [
   {

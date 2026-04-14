@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Background } from "@/components/background";
 import { DeadBanner } from "@/components/dead-banner";
 import { BackLink, FooterNav } from "@/components/nav";
@@ -5,6 +6,13 @@ import { getState } from "@/lib/state";
 import { CURSED_NUMBER, type Draw } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Log",
+  description:
+    "Complete draw history. Every number drawn, every day, cryptographically verifiable via its drand round and hash.",
+  alternates: { canonical: "/log" },
+};
 
 // Fixed-pixel grid for the row layout. On narrow viewports the wrapping
 // container scrolls horizontally so the pixel font never squashes.

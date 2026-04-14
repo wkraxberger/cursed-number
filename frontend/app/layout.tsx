@@ -15,10 +15,71 @@ const pressStart = Press_Start_2P({
   variable: "--font-pixel",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.cursednumber.com";
+const SITE_NAME = "Cursed Number";
+const SITE_DESCRIPTION =
+  "One number is drawn daily via drand. If it ever matches the cursed number, the signal dies forever. A daily reminder of life's inevitable fragility.";
+
 export const metadata: Metadata = {
-  title: "Cursed Number",
-  description:
-    "One number is drawn daily via drand. If it ever matches the cursed number, the signal dies forever.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "cursed number",
+    "drand",
+    "randomness beacon",
+    "internet experiment",
+    "art project",
+    "daily draw",
+    "memento mori",
+  ],
+  authors: [{ name: "Walter Kraxberger" }],
+  creator: "Walter Kraxberger",
+  icons: {
+    icon: [
+      { url: "/icons/skull.png", type: "image/png" },
+    ],
+    shortcut: "/icons/skull.png",
+    apple: "/icons/skull.png",
+  },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: ["/og.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
 };
 
 const CF_ANALYTICS_TOKEN = process.env.NEXT_PUBLIC_CF_ANALYTICS_TOKEN;
