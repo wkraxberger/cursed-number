@@ -60,7 +60,13 @@ function synthesizeDeadState(): SiteState {
 function seedFallback(): SiteState {
   if (FORCE_DEAD) return synthesizeDeadState();
   if (FORCE_WAITING) return { dead: false, deathDay: null, draws: [] };
-  return { dead: false, deathDay: null, draws: [...seedDraws] };
+  // In development, show the seed data so pages have something to render.
+  // In production, show the "awaiting first signal" state until the backend
+  // is wired up (CURSED_API_BASE_URL set).
+  if (process.env.NODE_ENV === "development") {
+    return { dead: false, deathDay: null, draws: [...seedDraws] };
+  }
+  return { dead: false, deathDay: null, draws: [] };
 }
 
 function normalizeState(raw: unknown): SiteState {
