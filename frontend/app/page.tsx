@@ -45,6 +45,21 @@ export default async function HomePage() {
           padding: "var(--pad-page-y) var(--pad-page-x)",
         }}
       >
+        <p
+          style={{
+            position: "absolute",
+            width: "1px",
+            height: "1px",
+            padding: 0,
+            margin: "-1px",
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            border: 0,
+          }}
+        >
+          Cursed Number is a daily internet experiment. Every day, a single number between 000 and 999 is drawn from the drand randomness beacon. One of those numbers is cursed. If the daily draw ever matches the cursed number, the signal dies forever and the site becomes a tombstone. A slow, verifiable memento mori.
+        </p>
         <div
           style={{
             width: "100%",
