@@ -1,4 +1,4 @@
-import { CURSED_NUMBER } from "@/lib/types";
+import { CURSED_PLACEHOLDER } from "@/lib/types";
 
 export function Panel({
   variant,
@@ -89,9 +89,11 @@ export function Panel({
 
 export function TombstonePanel({
   deathDayLabel,
+  finalNumber,
   marginTop,
 }: {
   deathDayLabel?: string;
+  finalNumber?: number | string;
   marginTop?: string;
 }) {
   return (
@@ -135,7 +137,7 @@ export function TombstonePanel({
           lineHeight: 1,
         }}
       >
-        {CURSED_NUMBER}
+        {finalNumber ?? CURSED_PLACEHOLDER}
       </div>
       <div
         style={{

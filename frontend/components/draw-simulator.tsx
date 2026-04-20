@@ -1,14 +1,14 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CURSED_NUMBER } from "@/lib/types";
+import { CURSED_PLACEHOLDER } from "@/lib/types";
 import { Panel, TombstonePanel } from "@/components/panels";
 
 type Phase =
   | "idle"
   | "rolling"
   | "landed"
-  | "matched"       // number lands on 666 — freeze moment
+  | "matched"       // cursed number landed: freeze moment
   | "flash"         // bright red flash
   | "glitching"     // heavy glitch distortion
   | "shaking"       // violent screen shake
@@ -16,6 +16,11 @@ type Phase =
   | "dead";         // tombstone fades in
 
 const SIGNAL_DURATION = 2400;
+
+// The cursed number the simulator uses when [K] is pressed. Dev-only: this
+// component is gated behind NODE_ENV and never reaches production, so the
+// value here doesn't reveal anything about the real cursed number.
+const SIM_CURSED_NUMBER = 666;
 
 export function DrawSimulator({
   initialNumber,
@@ -62,7 +67,7 @@ export function DrawSimulator({
       setPhase("glitching");
       glitchRef.current = setInterval(() => {
         setDisplayNumber(
-          Math.random() > 0.3 ? String(CURSED_NUMBER) : randomNum()
+          Math.random() > 0.3 ? String(SIM_CURSED_NUMBER) : randomNum()
         );
       }, 60);
     }, 2000);
@@ -71,7 +76,7 @@ export function DrawSimulator({
     setTimeout(() => {
       setPhase("shaking");
       if (glitchRef.current) clearInterval(glitchRef.current);
-      setDisplayNumber(String(CURSED_NUMBER));
+      setDisplayNumber(String(SIM_CURSED_NUMBER));
     }, 3500);
 
     // Phase 5: blackout — everything goes dark (1s)
@@ -101,29 +106,29 @@ export function DrawSimulator({
       setSignalStep("waiting");
       setDisplayNumber("---");
 
-      const target = cursed ? String(CURSED_NUMBER) : randomNum();
+      const drawn = cursed ? String(SIM_CURSED_NUMBER) : randomNum();
 
       // Step 1: wait (signal traveling) — 3s
       rollRef.current = setTimeout(() => {
         // Step 2: number arrives with flicker
         setSignalStep("arriving");
-        setDisplayNumber(target);
+        setDisplayNumber(drawn);
 
         // Brief flicker effect
         let flicks = 0;
         const flickerInterval = setInterval(() => {
           flicks++;
-          setDisplayNumber(flicks % 2 === 0 ? target : "---");
+          setDisplayNumber(flicks % 2 === 0 ? drawn : "---");
           if (flicks >= 4) {
             clearInterval(flickerInterval);
-            setDisplayNumber(target);
-            setDrawnNumber(target);
+            setDisplayNumber(drawn);
+            setDrawnNumber(drawn);
             setSignalStep("off");
             const newDay = dayCount + 1;
             setDayCount(newDay);
             setDay(`DAY ${String(newDay).padStart(3, "0")}`);
 
-            if (target === String(CURSED_NUMBER)) {
+            if (drawn === String(SIM_CURSED_NUMBER)) {
               // Let the number sit for a beat before death kicks in
               setPhase("landed");
               setTimeout(() => deathSequence(), 1500);
@@ -258,7 +263,7 @@ export function DrawSimulator({
               animation: "tombstoneReveal 2s ease-out",
             }}
           >
-            <TombstonePanel deathDayLabel={day} />
+            <TombstonePanel deathDayLabel={day} finalNumber={SIM_CURSED_NUMBER} />
           </div>
         ) : (
           <div
@@ -291,7 +296,7 @@ export function DrawSimulator({
             <Panel
               variant="cursed"
               label="CURSED NUMBER"
-              number={String(CURSED_NUMBER)}
+              number={isDying ? String(SIM_CURSED_NUMBER) : CURSED_PLACEHOLDER}
               caption={
                 isDying
                   ? isShaking

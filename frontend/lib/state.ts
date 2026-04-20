@@ -1,4 +1,4 @@
-import { CURSED_NUMBER, type Draw, type SiteState } from "./types";
+import type { Draw, SiteState } from "./types";
 import { seedDraws } from "./seed";
 
 // This app is a read-only front-end. Elsewhere in the architecture, a
@@ -6,7 +6,8 @@ import { seedDraws } from "./seed";
 //   1. Pulls the latest round from the drand public beacon.
 //   2. Converts the randomness to a number in [0, 999].
 //   3. Writes the resulting Draw to DynamoDB.
-//   4. If the number == CURSED_NUMBER, flips the `dead` flag in DynamoDB.
+//   4. Compares against the real cursed number (kept only on the backend)
+//      and flips the `dead` flag in DynamoDB when it matches.
 //
 // A separate read API (typically API Gateway fronting a small Lambda that
 // queries DynamoDB) exposes the current state as JSON. This module hits
@@ -42,6 +43,10 @@ type ApiState = {
   draws: Draw[];
 };
 
+// Used only by the CURSED_FORCE_DEAD dev/preview flag to synthesize a plausible
+// memorial state. Not the real cursed number.
+const FORCE_DEAD_PLACEHOLDER_NUMBER = 0;
+
 function synthesizeDeadState(): SiteState {
   const base = [...seedDraws];
   const latest = base[0];
@@ -50,7 +55,7 @@ function synthesizeDeadState(): SiteState {
   const cursed: Draw = {
     day: cursedDay,
     round: cursedRound,
-    drawn: CURSED_NUMBER,
+    drawn: FORCE_DEAD_PLACEHOLDER_NUMBER,
     hash: "deadc0ded0",
     timestamp: new Date().toISOString(),
   };

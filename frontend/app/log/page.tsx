@@ -3,7 +3,7 @@ import { Background } from "@/components/background";
 import { DeadBanner } from "@/components/dead-banner";
 import { BackLink, FooterNav } from "@/components/nav";
 import { getState } from "@/lib/state";
-import { CURSED_NUMBER, type Draw } from "@/lib/types";
+import type { Draw } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -22,8 +22,8 @@ const MIN_TABLE_WIDTH = "720px";
 export default async function LogPage() {
   const state = await getState();
   const draws = state.draws;
-  const matches = draws.filter((d) => d.drawn === CURSED_NUMBER).length;
   const dead = state.dead;
+  const deathDay = state.deathDay;
 
   return (
     <>
@@ -112,6 +112,7 @@ export default async function LogPage() {
                   key={d.day}
                   draw={d}
                   isLast={i === draws.length - 1}
+                  cursed={dead && deathDay === d.day}
                 />
               ))}
             </div>
@@ -126,20 +127,20 @@ export default async function LogPage() {
   );
 }
 
-function LogRow({ draw, isLast }: { draw: Draw; isLast: boolean }) {
-  const diff = Math.abs(draw.drawn - CURSED_NUMBER);
-  const cursed = draw.drawn === CURSED_NUMBER;
-  const closeCall = !cursed && diff <= 10;
-
-  const drawnColor = cursed ? "#C44030" : closeCall ? "#D4682A" : "#E8E0D0";
+function LogRow({
+  draw,
+  isLast,
+  cursed,
+}: {
+  draw: Draw;
+  isLast: boolean;
+  cursed: boolean;
+}) {
+  const drawnColor = cursed ? "#C44030" : "#E8E0D0";
   const statusColor = cursed ? "#C44030" : "#6878B0";
   const statusText = cursed ? "CURSED" : "SURVIVED";
-  const obsColor = cursed ? "#C44030" : closeCall ? "#D4682A" : "#5A5A7E";
-  const obsText = cursed
-    ? "▲ SIGNAL LOST"
-    : closeCall
-      ? "▲ CLOSE CALL"
-      : "—";
+  const obsColor = cursed ? "#C44030" : "#5A5A7E";
+  const obsText = cursed ? "▲ SIGNAL LOST" : "—";
 
   return (
     <div

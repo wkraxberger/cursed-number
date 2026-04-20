@@ -4,7 +4,7 @@ import { DrawSimulator } from "@/components/draw-simulator";
 import { Nav } from "@/components/nav";
 import { Panel, TombstonePanel } from "@/components/panels";
 import { getState } from "@/lib/state";
-import { CURSED_NUMBER } from "@/lib/types";
+import { CURSED_PLACEHOLDER } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -121,7 +121,10 @@ export default async function HomePage() {
           </div>
 
           {dead ? (
-            <TombstonePanel deathDayLabel={deathDayLabel} />
+            <TombstonePanel
+              deathDayLabel={deathDayLabel}
+              finalNumber={latest ? String(latest.drawn).padStart(3, "0") : undefined}
+            />
           ) : waiting ? (
             <div
               style={{
@@ -144,7 +147,7 @@ export default async function HomePage() {
               <Panel
                 variant="cursed"
                 label="CURSED NUMBER"
-                number={String(CURSED_NUMBER)}
+                number={CURSED_PLACEHOLDER}
                 caption="NOT YET"
               />
             </div>
@@ -175,7 +178,7 @@ export default async function HomePage() {
               <Panel
                 variant="cursed"
                 label="CURSED NUMBER"
-                number={String(CURSED_NUMBER)}
+                number={CURSED_PLACEHOLDER}
                 caption="NOT YET"
               />
             </div>
