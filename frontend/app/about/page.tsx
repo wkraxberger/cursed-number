@@ -89,7 +89,7 @@ export default async function AboutPage() {
             number="01"
             Icon={SignalIcon}
             title="THE SIGNAL"
-            body="At midnight UTC, the beacon speaks. A number rises from drand, a rite of unseen machines scattered across the world. No one can predict it. No one can fake it."
+            body="At midnight UTC, the beacon speaks. A raw signal rises from drand, a rite of unseen machines scattered across the world. No one can predict it. No one can fake it."
           />
           <StepCard
             number="02"
