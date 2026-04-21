@@ -1,10 +1,10 @@
 type Scene = "home" | "about" | "faq" | "log";
 
 const sceneExt: Record<Scene, string> = {
-  home: "png",
-  about: "png",
-  faq: "png",
-  log: "png",
+  home: "webp",
+  about: "webp",
+  faq: "webp",
+  log: "webp",
 };
 
 export function Background({ scene }: { scene: Scene }) {
