@@ -9,7 +9,7 @@ import {
 } from "@/components/pixel-icons";
 import { getState } from "@/lib/state";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: { absolute: "How the Cursed Number Is Drawn · Cursed Number" },

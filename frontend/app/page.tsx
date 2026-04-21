@@ -6,7 +6,7 @@ import { Panel, TombstonePanel } from "@/components/panels";
 import { getState } from "@/lib/state";
 import { CURSED_PLACEHOLDER } from "@/lib/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function HomePage() {
   const state = await getState();

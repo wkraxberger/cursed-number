@@ -5,7 +5,7 @@ import { BackLink, FooterNav } from "@/components/nav";
 import { getState } from "@/lib/state";
 import type { Draw } from "@/lib/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: { absolute: "Daily Draw Log · Cursed Number" },

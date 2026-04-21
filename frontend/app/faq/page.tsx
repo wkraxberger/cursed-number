@@ -4,7 +4,7 @@ import { DeadBanner } from "@/components/dead-banner";
 import { BackLink, FooterNav } from "@/components/nav";
 import { getState } from "@/lib/state";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "FAQ",

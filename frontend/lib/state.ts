@@ -90,9 +90,9 @@ function normalizeState(raw: unknown): SiteState {
  * - Always returns a `SiteState`, never throws into the page — if the API
  *   is unreachable or returns a bad payload we log and fall back to seed
  *   data so the UI stays up.
- * - Uses `cache: "no-store"` so stale memorial state can never be shown.
- *   If you want caching, configure CDN caching on the API itself and drop
- *   this line so Next can pick up the CDN TTL.
+ * - Uses a 60 second ISR window. The draw changes once per day at midnight
+ *   UTC, so a minute of staleness on the memorial banner is acceptable in
+ *   exchange for a cacheable HTML response.
  */
 export async function getState(): Promise<SiteState> {
   if (FORCE_DEAD) return synthesizeDeadState();
@@ -100,7 +100,9 @@ export async function getState(): Promise<SiteState> {
   if (!API_BASE) return seedFallback();
 
   try {
-    const res = await fetch(`${API_BASE}/state`, { cache: "no-store" });
+    const res = await fetch(`${API_BASE}/state`, {
+      next: { revalidate: 60 },
+    });
     if (!res.ok) {
       throw new Error(`GET /state → ${res.status} ${res.statusText}`);
     }
