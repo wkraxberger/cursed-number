@@ -3,6 +3,7 @@ import Link from "next/link";
 const links = [
   { href: "/about", label: "ABOUT" },
   { href: "/faq", label: "FAQ" },
+  { href: "/lore", label: "LORE" },
   { href: "/log", label: "LOG" },
   {
     href: "https://github.com/wkraxberger/cursed-number",
@@ -77,6 +78,7 @@ const allLinks = [
   { href: "/", label: "HOME" },
   { href: "/about", label: "ABOUT" },
   { href: "/faq", label: "FAQ" },
+  { href: "/lore", label: "LORE" },
   { href: "/log", label: "LOG" },
   {
     href: "https://github.com/wkraxberger/cursed-number",

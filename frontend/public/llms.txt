@@ -17,6 +17,7 @@
 - [Home](https://www.cursednumber.com/): Current state, today's draw, countdown to next draw.
 - [About](https://www.cursednumber.com/about): How the system works.
 - [FAQ](https://www.cursednumber.com/faq): Detailed answers about randomness, odds, endings, and open source.
+- [Lore](https://www.cursednumber.com/lore): A brief history of cursed numbers across cultures. 666, 13, 4, 17, 23, 27, Sadako's number, 0.
 - [Log](https://www.cursednumber.com/log): Complete history of every draw ever made.
 
 ## Source
