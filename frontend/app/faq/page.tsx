@@ -13,13 +13,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
 };
 
-const faqs: { q: string; a: React.ReactNode }[] = [
+type FAQ = { q: string; text: string; a: React.ReactNode };
+
+const faqs: FAQ[] = [
   {
     q: "What is Cursed Number?",
+    text:
+      "An experimental internet project. One number is drawn every day. If the draw ever lands on the cursed number, the signal dies forever. A daily reminder of life's inevitable fragility.",
     a: "An experimental internet project. One number is drawn every day. If the draw ever lands on the cursed number, the signal dies forever. A daily reminder of life's inevitable fragility.",
   },
   {
     q: "How is the number drawn?",
+    text:
+      "Powered by drand, a public verifiable randomness beacon supported by the League of Entropy. Each draw uses a cryptographic randomness round that no one can predict or manipulate.",
     a: (
       <>
         Powered by{" "}
@@ -32,22 +38,32 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "Can anyone control the outcome?",
+    text:
+      "No. The randomness is publicly verifiable and cryptographically secure. Every draw is logged with its hash. Anyone can audit any past result.",
     a: "No. The randomness is publicly verifiable and cryptographically secure. Every draw is logged with its hash. Anyone can audit any past result.",
   },
   {
     q: "What are the odds?",
+    text:
+      "Each day a number between 0 and 999 is drawn. One of those numbers is the cursed number. That gives a 1 in 1,000 chance every day. Draws happen at midnight UTC.",
     a: "Each day a number between 0 and 999 is drawn. One of those numbers is the cursed number. That gives a 1 in 1,000 chance every day. Draws happen at midnight UTC.",
   },
   {
     q: "What happens if the cursed number is drawn?",
+    text:
+      "The draws stop forever. No restart, no sequel, no second chance. The site stays up as a memorial: you can still browse the archive and verify every past draw, but the signal is dead.",
     a: "The draws stop forever. No restart, no sequel, no second chance. The site stays up as a memorial: you can still browse the archive and verify every past draw, but the signal is dead.",
   },
   {
     q: "Is the ending fixed?",
+    text:
+      "No. If the cursed number is drawn, there is a 95% chance of getting the regular ending, but a 5% chance of triggering a much stranger one. The ending is selected by verifiable random criteria. Once chosen, the bucket containing the ending that didn't happen is permanently deleted. There is no backup, no one will ever know what it looked like.",
     a: "No. If the cursed number is drawn, there is a 95% chance of getting the regular ending, but a 5% chance of triggering a much stranger one. The ending is selected by verifiable random criteria. Once chosen, the bucket containing the ending that didn't happen is permanently deleted. There is no backup, no one will ever know what it looked like.",
   },
   {
     q: "Is this open source?",
+    text:
+      "Yes. The full source code is available on GitHub at https://github.com/wkraxberger/cursed-number. You can verify the draw logic, audit the randomness, and inspect every line.",
     a: (
       <>
         Yes. The full source code is available on{" "}
@@ -60,15 +76,59 @@ const faqs: { q: string; a: React.ReactNode }[] = [
   },
   {
     q: "How are the death visuals kept secret?",
+    text:
+      "The images and assets for the death state are stored in a separate, sealed bucket. They are not part of the build, not in the GitHub repo, and no one can access them until the cursed number is drawn.",
     a: "The images and assets for the death state are stored in a separate, sealed bucket. They are not part of the build, not in the GitHub repo, and no one can access them until the cursed number is drawn.",
   },
 ];
 
+const SITE_URL = "https://www.cursednumber.com";
+
 export default async function FaqPage() {
   const state = await getState();
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.text,
+      },
+    })),
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${SITE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "FAQ",
+        item: `${SITE_URL}/faq`,
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Background scene="faq" />
       <main
         style={{
@@ -101,6 +161,17 @@ export default async function FaqPage() {
         >
           FAQ
         </h1>
+        <p
+          style={{
+            color: "#E8E0D0",
+            fontSize: "var(--fs-label)",
+            letterSpacing: "clamp(2px, 0.4vw, 4px)",
+            marginTop: "clamp(4px, 1vw, 12px)",
+            textAlign: "center",
+          }}
+        >
+          COMMON QUESTIONS
+        </p>
 
         <div
           style={{
@@ -109,7 +180,7 @@ export default async function FaqPage() {
             marginTop: "clamp(4px, 1vw, 16px)",
             border: "1px solid #1A1A3A",
             borderRadius: "4px",
-            backgroundColor: "#0A0A0FCC",
+            backgroundColor: "#0A0A0F80",
           }}
         >
           <div

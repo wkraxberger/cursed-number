@@ -18,13 +18,42 @@ export default async function HomePage() {
   const deathDayLabel =
     state.deathDay != null ? `DAY ${String(state.deathDay).padStart(3, "0")}` : "";
 
+  const SITE_URL = "https://www.cursednumber.com";
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Cursed Number",
-    url: "https://www.cursednumber.com",
-    description:
-      "An experimental internet project. One number is drawn every day via drand. If the draw ever lands on the cursed number, the signal dies forever.",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        name: "Cursed Number",
+        url: SITE_URL,
+        description:
+          "An experimental internet project. One number is drawn every day via drand. If the draw ever lands on the cursed number, the signal dies forever.",
+        publisher: { "@id": `${SITE_URL}/#person` },
+        inLanguage: "en",
+      },
+      {
+        "@type": "CreativeWork",
+        "@id": `${SITE_URL}/#creativework`,
+        name: "Cursed Number",
+        url: SITE_URL,
+        description:
+          "A daily internet experiment. One number is drawn daily from drand, a public verifiable randomness beacon. If it ever matches the cursed number, the signal dies forever and the site becomes a tombstone. A verifiable memento mori.",
+        genre: ["internet art", "memento mori", "generative project"],
+        keywords:
+          "cursed number, cursed numbers, drand, randomness beacon, memento mori, art project",
+        author: { "@id": `${SITE_URL}/#person` },
+        creator: { "@id": `${SITE_URL}/#person` },
+        isAccessibleForFree: true,
+        license: "https://opensource.org/licenses/MIT",
+      },
+      {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
+        name: "Walter Kraxberger",
+        url: "https://github.com/wkraxberger",
+      },
+    ],
   };
 
   return (

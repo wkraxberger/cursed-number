@@ -12,17 +12,32 @@ import { getState } from "@/lib/state";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: { absolute: "How the Cursed Number Is Drawn · Cursed Number" },
   description:
     "How Cursed Number works: one number drawn daily via drand's public randomness beacon, compared to the cursed number, and if they match the signal dies forever.",
   alternates: { canonical: "/about" },
 };
 
+const SITE_URL = "https://www.cursednumber.com";
+
 export default async function AboutPage() {
   const state = await getState();
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: "About", item: `${SITE_URL}/about` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Background scene="about" />
       <main
         style={{
@@ -42,38 +57,30 @@ export default async function AboutPage() {
 
         {state.dead ? <DeadBanner deathDay={state.deathDay} /> : null}
 
-        <div
+        <h1
           style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "clamp(10px, 1.6vw, 20px)",
+            color: "#E8E0D0",
+            fontSize: "var(--fs-title)",
+            letterSpacing: "var(--ls-hero)",
+            lineHeight: 1.15,
             textAlign: "center",
-            width: "100%",
-            maxWidth: "760px",
+            overflowWrap: "break-word",
+            marginTop: state.dead ? undefined : "clamp(-10px, -1.5vw, -4px)",
           }}
         >
-          <h1
-            style={{
-              color: "#E8E0D0",
-              fontSize: "var(--fs-title)",
-              letterSpacing: "var(--ls-hero)",
-              lineHeight: 1.15,
-              overflowWrap: "break-word",
-            }}
-          >
-            ABOUT
-          </h1>
-          <div
-            style={{
-              color: "#E8E0D0",
-              fontSize: "var(--fs-label)",
-              letterSpacing: "clamp(2px, 0.4vw, 4px)",
-              marginTop: "clamp(8px, 1.5vw, 16px)",
-            }}
-          >
-            HOW IT WORKS
-          </div>
-        </div>
+          ABOUT
+        </h1>
+        <p
+          style={{
+            color: "#E8E0D0",
+            fontSize: "var(--fs-label)",
+            letterSpacing: "clamp(2px, 0.4vw, 4px)",
+            marginTop: "clamp(4px, 1vw, 12px)",
+            textAlign: "center",
+          }}
+        >
+          HOW THE BEACON SPEAKS
+        </p>
 
         <div
           style={{

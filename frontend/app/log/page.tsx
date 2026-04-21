@@ -8,7 +8,7 @@ import type { Draw } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Log",
+  title: { absolute: "Daily Draw Log · Cursed Number" },
   description:
     "Complete draw history. Every number drawn, every day, cryptographically verifiable via its drand round and hash.",
   alternates: { canonical: "/log" },
@@ -19,14 +19,29 @@ export const metadata: Metadata = {
 const GRID_COLS = "56px 96px 64px 96px 140px 1fr";
 const MIN_TABLE_WIDTH = "720px";
 
+const SITE_URL = "https://www.cursednumber.com";
+
 export default async function LogPage() {
   const state = await getState();
   const draws = state.draws;
   const dead = state.dead;
   const deathDay = state.deathDay;
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 2, name: "Log", item: `${SITE_URL}/log` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Background scene="log" />
       <main
         style={{
@@ -61,15 +76,14 @@ export default async function LogPage() {
         </h1>
         <p
           style={{
-            color: "#8A8A9E",
+            color: "#E8E0D0",
             fontSize: "var(--fs-label)",
-            letterSpacing: "1px",
-            marginTop: "-10px",
+            letterSpacing: "clamp(2px, 0.4vw, 4px)",
+            marginTop: "clamp(4px, 1vw, 12px)",
+            textAlign: "center",
           }}
         >
-          {dead
-            ? "Final broadcast logged. Every draw recorded."
-            : "Broadcast history. Every draw recorded."}
+          {dead ? "FINAL BROADCAST LOGGED" : "BROADCAST HISTORY"}
         </p>
 
         <div
