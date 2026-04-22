@@ -8,10 +8,24 @@ import { CURSED_PLACEHOLDER } from "@/lib/types";
 
 export const revalidate = 60;
 
+const ALIVE_SUBTITLES = [
+  "ONE IN A THOUSAND, DAILY",
+  "DEATH BY LOTTERY AS A SERVICE",
+  "THE BEACON SPEAKS DAILY",
+  "WAITING FOR THE END OF THE SIGNAL",
+  "A SIGNAL FROM THE VOID",
+  "ONE DAY THE NUMBER WILL MATCH",
+];
+
+function pickAliveSubtitle() {
+  return ALIVE_SUBTITLES[Math.floor(Math.random() * ALIVE_SUBTITLES.length)];
+}
+
 export default async function HomePage() {
   const state = await getState();
   const dead = state.dead;
   const waiting = !dead && state.draws.length === 0;
+  const aliveSubtitle = pickAliveSubtitle();
   const latest = state.draws[0] ?? null;
   const drawnLabel = latest ? String(latest.drawn).padStart(3, "0") : "—";
   const dayLabel = latest ? `DAY ${String(latest.day).padStart(3, "0")}` : "";
@@ -153,14 +167,13 @@ export default async function HomePage() {
             </h1>
             <div
               style={{
-                color: "#5A5A7E",
+                color: "#E8E0D0",
                 fontSize: "var(--fs-label)",
-                letterSpacing: "var(--ls-label)",
+                letterSpacing: "clamp(2px, 0.4vw, 4px)",
+                marginTop: "clamp(4px, 1vw, 12px)",
               }}
             >
-              {dead
-                ? "The signal has ended. The archive is locked."
-                : "One draw per day. One chance to die."}
+              {dead ? "THE BROADCAST HAS ENDED" : aliveSubtitle}
             </div>
           </div>
 
